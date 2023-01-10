@@ -46,7 +46,6 @@ spec:
 #        args:
 #          - systemctl start ssh.service;
         ports:
-        - containerPort: 22
         - containerPort: 80
         resources:
           requests:
@@ -63,6 +62,13 @@ spec:
       initContainers: # initContainer to copy configMap to editable volume
       - name: copy
         image: sgoser/nginx-webserver:v0.5
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
         command: ["bash", "-c"]
         args:  
         # copy mounted /tmp/index.html (filename from data section in configMap)
